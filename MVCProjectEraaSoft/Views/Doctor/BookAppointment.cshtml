@@ -1,0 +1,89 @@
+﻿ @model MVCProjectEraaSoft.Models.Appointment
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-4 text-center">
+                        Book Appointment
+                    </h3>
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @TempData["Error"]
+                        </div>
+                    }
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success text-center">
+                            @TempData["Success"]
+                        </div>
+                    }
+
+
+                    <form asp-action="BookAppointment" method="post">
+                        <input type="hidden" name="doctorId" value="@Context.Request.Query["doctorId"]" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Patient Name</label>
+                            <input name="PatientName" class="form-control" placeholder="Your Name" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Date</label>
+                            <input name="date" type="date" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Time</label>
+                            <input name="time" type="time" class="form-control" required />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        @if (TempData["Error"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: '@TempData["Error"]',
+                    confirmButtonColor: '#d33'
+                });
+            </text>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '@TempData["Success"]',
+                    confirmButtonColor: '#3085d6'
+                });
+            </text>
+        }
+    </script>
+}
+

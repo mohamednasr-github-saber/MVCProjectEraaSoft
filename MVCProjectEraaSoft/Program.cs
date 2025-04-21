@@ -1,3 +1,5 @@
+using MVCProjectEraaSoft.Data;
+
 namespace MVCProjectEraaSoft
 {
     public class Program
@@ -8,6 +10,7 @@ namespace MVCProjectEraaSoft
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationDbContext>();
 
             var app = builder.Build();
 
@@ -28,7 +31,7 @@ namespace MVCProjectEraaSoft
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Doctor}/{action=Index}/{id?}");
 
             app.Run();
         }

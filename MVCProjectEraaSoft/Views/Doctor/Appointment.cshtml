@@ -1,0 +1,91 @@
+﻿@model  IEnumerable< Doctor>
+
+<h2 class="mb-4">Book Appointment</h2>
+
+<!-- Filter Section -->
+<section class="py-4 bg-light">
+    <div class="container px-4 px-lg-5">
+        <form action="/Doctor/Appointment">
+            <div class="row">
+                <!-- Category Filter -->
+                <div class="col-md-3">
+                    <select name="id" class="form-select">
+                        <option>All Specialization</option>
+                        @{
+
+                            if (ViewData["Doctors"] is List<Doctor> Doctors)
+                            {
+                                foreach (var item in Doctors)
+                                {
+                                    if (item.Id == ViewBag.Id)
+                                    {
+                                        <option value="@item.Id" selected>@item.Specialization</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Specialization">@item.Specialization</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+
+                <!-- Search by Name -->
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Search by" name="name" value="@ViewBag.name" />
+                 </div> <!-- Search by Name -->
+              
+                
+
+               
+                <!-- Submit Button -->
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-dark w-100">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- List of doctors -->
+<div class="row">
+    @foreach (var doctor in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@doctor.Img" class="card-img-top" alt="@doctor.Name" style="height: 300px; object-fit: cover;" />
+                <div class="card-body text-center">
+                    <h5 class="card-title">@doctor.Name</h5>
+                    <p class="card-text">@doctor.Specialization</p>
+
+                    <!-- Updated Book Appointment Button as a link -->
+                    <a href="@Url.Action("BookAppointment", "Doctor", new { doctorId = doctor.Id })" class="btn btn-primary">
+                        Book Appointment
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+<!-- Pagination -->
+<div class="row">
+    <div class="col-12 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+                @for (int i = 1; i <= ViewBag.TotalCountOfDoctor; i++)
+                {
+                    <li class="page-item"><a class="page-link" href="/Doctor/Appointment?page=@i">@i</a></li>
+                }
+
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
